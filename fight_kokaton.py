@@ -84,6 +84,19 @@ class Bird:
             self.img = __class__.imgs[tuple(sum_mv)]
         screen.blit(self.img, self.rct)
 
+class Explosion:
+    def __init__(self):
+        self.img = pg.image.load(f"fig/explosion.gif")
+        exp = pg.transform.flip(self.img)
+        two_ex = [self.img,exp]
+        self.rct =self.img.get_rect()
+
+    def update(self,screen:pg.Surface):
+        self.life -=1
+        if self.life > 0:
+            screen.glid = two_ex[self.life % 2]
+            
+
 
 class Beam:
     """
@@ -155,6 +168,7 @@ def main():
     beam = None  # ゲーム初期化時にはビームは存在しない
     clock = pg.time.Clock()
     tmr = 0
+    exp_color =[]
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -178,6 +192,7 @@ def main():
         for i, bomb in enumerate(bombs):
             if beam is not None:
                 if beam.rct.colliderect(bomb.rct):  # 練習2：爆弾とビームの衝突判定
+                    exp_color.append(Exploson.(bomb.rct))               
                     beam = None
                     bombs[i] = None
                     bird.change_img(6, screen)  # 練習3：こうかとん喜びエフェクト
