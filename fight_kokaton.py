@@ -213,7 +213,7 @@ def main():
                         if beam.rct.colliderect(bomb.rct):  # 練習2：爆弾とビームの衝突判定
                             multibeam[j] = None
                             bombs[i] = None
-                            value.value += 1
+                            value.value += 1  # 爆弾とビームが衝突した際、カウントが増えるためのもの
                             bird.change_img(6, screen)  # 練習3：こうかとん喜びエフェクト
                             pg.display.update()
                             # #time.sleep(1)
