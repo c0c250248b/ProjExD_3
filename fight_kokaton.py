@@ -200,7 +200,7 @@ def main():
                             multibeam[j] = None
                             bombs[i] = None
                             value.value += 1
-                    bird.change_img(6, screen)  # 練習3：こうかとん喜びエフェクト
+                            bird.change_img(6, screen)  # 練習3：こうかとん喜びエフェクト
                             pg.display.update()
                             # #time.sleep(1)
         
