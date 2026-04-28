@@ -95,8 +95,8 @@ class Beam:
         """
         self.img = pg.image.load(f"fig/beam.png")
         self.rct = self.img.get_rect()
-        self.rct.centery = bird.rct.centery  #　こうかとんの中心縦座標
-        self.rct.left = bird.rct.right  #　こうかとんの右座標
+        self.rct.centery = bird.rct.centery  # ビームの中心縦座標 = こうかとんの中心縦座標
+        self.rct.left = bird.rct.right  # ビームの左座標 = こうかとんの右座標
         self.vx, self.vy = +5, 0
 
     def update(self, screen: pg.Surface):
@@ -157,10 +157,13 @@ def main():
                 # スペースキー押下でBeamクラスのインスタンス生成
                 beam = Beam(bird)            
         screen.blit(bg_img, [0, 0])
-
+        
         if bomb is not None:
             if bird.rct.colliderect(bomb.rct):
                 # ゲームオーバー時に，こうかとん画像を切り替え，1秒間表示させる
+                fonto = pg.font.Font(None, 80)
+                txt = fonto.render("Game Over", True, (255, 0, 0))
+                screen.blit(txt, [WIDTH//2-150, HEIGHT//2])
                 bird.change_img(8, screen)
                 pg.display.update()
                 time.sleep(1)
@@ -168,18 +171,19 @@ def main():
         
         if bomb is not None:
             if beam is not None:
-                if bird.rct.colliderect(bomb.rct):  # 練習2:衝突判定
-                    bomb = None
+                if beam.rct.colliderect(bomb.rct):  # 練習2：爆弾とビームの衝突判定
                     beam = None
-                    bird.change_img(6, screen)
+                    bomb = None
+                    bird.change_img(6, screen)  # 練習3：こうかとん喜びエフェクト
                     pg.display.update()
                     time.sleep(1)
+
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
         if beam is not None:
-            beam.update(screen)  
-        if bomb is not None: 
+            beam.update(screen)
+        if bomb is not None:
             bomb.update(screen)
         pg.display.update()
         tmr += 1
